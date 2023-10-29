@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  padding: 20px;
+}
+
+.vote-header {
+  margin-top: 50px;
+}
+
+.wrapper {
+  display: flex;
+  column-gap: 50px;
+
+  & * {
+    flex-basis: 50%;
+  }
+}
