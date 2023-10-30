@@ -1,0 +1,44 @@
+<mat-form-field class="example-form-field">
+  <mat-label><ng-content></ng-content></mat-label>
+  <input
+    matInput
+    trimFormControl
+    type="text"
+    [formControl]="entityFormControl"
+  />
+  <mat-error
+    *ngIf="
+      entityFormControl.hasError('minlength') ||
+      entityFormControl.hasError('maxlength')
+    "
+    testId="length-error"
+  >
+    New name must be between
+    {{ votingStateService.NEW_VOTER_MIN_LENGTH }} and
+    {{ votingStateService.NEW_VOTER_MAX_LENGTH }} characters long.
+  </mat-error>
+  <mat-error *ngIf="entityFormControl.hasError('existingName')">
+    Duplicated name
+  </mat-error>
+  <button
+    *ngIf="entityFormControl.value"
+    matSuffix
+    mat-icon-button
+    aria-label="Check"
+    class="input-action"
+    (click)="addNewCandidate.emit()"
+  >
+    <mat-icon>check</mat-icon>
+  </button>
+  <button
+    *ngIf="!entityFormControl.value"
+    matSuffix
+    mat-icon-button
+    aria-label="Cancel"
+    class="input-action"
+    testId="cancel-button"
+    (click)="toggleAddMode.emit()"
+  >
+    <mat-icon>cancel</mat-icon>
+  </button>
+</mat-form-field>

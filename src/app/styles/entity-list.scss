@@ -1,0 +1,15 @@
+.empty-cell-message {
+  padding-left: 16px;
+  height: 52px;
+  background-color: beige;
+}
+
+table {
+  max-width: 50%;
+  border: 1px solid black;
+}
+
+.action {
+  float: right;
+  cursor: pointer;
+}

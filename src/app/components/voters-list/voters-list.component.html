@@ -1,0 +1,55 @@
+<table
+  mat-table
+  [dataSource]="votingStateService.voters"
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="hasVoted">
+    <th mat-header-cell *matHeaderCellDef>Has voted</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon>{{ element.hasVoted ? "check" : "cancel" }}</mat-icon>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="header-row-first-group">
+    <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
+      <span>Voters</span>
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Add"
+        class="action"
+        (click)="enableAddVoterMode()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </th>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['header-row-first-group']"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td
+      class="mat-cell empty-cell-message"
+      testId="empty-cell-message"
+      [attr.colspan]="displayedColumns.length"
+    >
+      List of voters is empty.
+    </td>
+  </tr>
+</table>
+
+<app-new-entity
+  *ngIf="addVoterMode"
+  [entityFormControl]="newVoterFormControl"
+  (addNewCandidate)="addNewVoter()"
+  (toggleAddMode)="addVoterMode = false"
+>
+  Add new voter
+</app-new-entity>

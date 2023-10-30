@@ -7,13 +7,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { VotersListComponent } from './components/voters-list/voters-list.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatSelectModule } from '@angular/material/select';
+import { VotingStateService } from './services/voting-state.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TrimDirective } from './directives/trim.directive';
+import { NewEntityComponent } from './components/new-entity/new-entity.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    VotersListComponent,
+    NewEntityComponent,
+    TrimDirective,
+  ],
   imports: [
     BrowserModule,
     MatTableModule,
@@ -26,6 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSelectModule,
     MatSnackBarModule,
   ],
+  providers: [VotingStateService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
