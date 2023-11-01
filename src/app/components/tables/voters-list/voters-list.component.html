@@ -1,24 +1,26 @@
-<table mat-table [dataSource]="candidates" class="mat-elevation-z8 table">
+<table mat-table [dataSource]="voters" class="mat-elevation-z8 table">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">{{ element.name }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="voteCount">
-    <th mat-header-cell *matHeaderCellDef>Votes</th>
-    <td mat-cell *matCellDef="let element">{{ element.voteCount }}</td>
+  <ng-container matColumnDef="hasVoted">
+    <th mat-header-cell *matHeaderCellDef>Has voted</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon>{{ element.hasVoted ? "check" : "cancel" }}</mat-icon>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="header-row-first-group">
     <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
       <div class="header-content">
-        <span>Candidates</span>
+        <span>Voters</span>
         <button
           matSuffix
           mat-icon-button
           aria-label="Add"
           class="action"
-          (click)="enableAddCandidateMode()"
+          (click)="enableAddVoterMode()"
         >
           <mat-icon>add</mat-icon>
         </button>
@@ -36,15 +38,16 @@
       testId="empty-cell-message"
       [attr.colspan]="displayedColumns.length"
     >
-      List of candidates is empty.
+      List of voters is empty.
     </td>
   </tr>
 </table>
-<app-new-entity
-  *ngIf="addCandidateMode"
-  [entityFormControl]="newCandidateFormControl"
-  (addNewCandidate)="addNewCandidate()"
+
+<app-new-entry
+  *ngIf="addVoterMode"
+  [entryFormControl]="newVoterFormControl"
+  (addNewCandidate)="addNewVoter()"
   (toggleAddMode)="clearFormState()"
 >
-  Add new candidate
-</app-new-entity>
+  Add new voter
+</app-new-entry>

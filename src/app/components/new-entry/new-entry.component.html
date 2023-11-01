@@ -4,12 +4,12 @@
     matInput
     trimFormControl
     type="text"
-    [formControl]="entityFormControl"
+    [formControl]="entryFormControl"
   />
   <mat-error
     *ngIf="
-      entityFormControl.hasError('minlength') ||
-      entityFormControl.hasError('maxlength')
+      entryFormControl.hasError('minlength') ||
+      entryFormControl.hasError('maxlength')
     "
     testId="length-error"
   >
@@ -17,11 +17,11 @@
     {{ formService.NEW_VOTER_MIN_LENGTH }} and
     {{ formService.NEW_VOTER_MAX_LENGTH }} characters long.
   </mat-error>
-  <mat-error *ngIf="entityFormControl.hasError('existingName')">
+  <mat-error *ngIf="entryFormControl.hasError('existingName')">
     Duplicated name
   </mat-error>
   <button
-    *ngIf="entityFormControl.value"
+    *ngIf="entryFormControl.value"
     matSuffix
     mat-icon-button
     aria-label="Check"

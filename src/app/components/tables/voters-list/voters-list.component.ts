@@ -1,4 +1,4 @@
-import { VotersService } from './../../services/voters.service';
+import { VotersService } from '../../../services/voters.service';
 import {
   ChangeDetectionStrategy,
   Component,

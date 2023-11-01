@@ -1,4 +1,4 @@
-import { Entity } from './entity.interface';
+import { Entity } from './entry.interface';
 
 export interface Voter extends Entity {
   hasVoted: boolean;

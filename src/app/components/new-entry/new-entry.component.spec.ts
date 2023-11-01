@@ -5,14 +5,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NewEntityComponent } from './new-entity.component';
+import { NewEntryComponent } from './new-entry.component';
 import { CandidatesService } from 'src/app/services/candidates.service';
 import { TrimDirective } from 'src/app/directives/trim.directive';
 import { FormService } from 'src/app/services/form.service';
 
-describe('NewEntityComponent', () => {
-  let component: NewEntityComponent;
-  let fixture: ComponentFixture<NewEntityComponent>;
+describe('NewEntryComponent', () => {
+  let component: NewEntryComponent;
+  let fixture: ComponentFixture<NewEntryComponent>;
 
   const mockFormService: jasmine.SpyObj<FormService> = jasmine.createSpyObj(
     'FormService',
@@ -32,15 +32,15 @@ describe('NewEntityComponent', () => {
         ReactiveFormsModule,
         BrowserAnimationsModule,
       ],
-      declarations: [NewEntityComponent, TrimDirective],
+      declarations: [NewEntryComponent, TrimDirective],
       providers: [{ provide: CandidatesService, useValue: mockFormService }],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewEntityComponent);
+    fixture = TestBed.createComponent(NewEntryComponent);
     component = fixture.componentInstance;
-    component.entityFormControl = new FormControl('', {
+    component.entryFormControl = new FormControl('', {
       validators: [Validators.minLength(4)],
     });
 
@@ -54,7 +54,7 @@ describe('NewEntityComponent', () => {
   it('should emit addNewCandidate event when check button is clicked', () => {
     spyOn(component.addNewCandidate, 'emit');
 
-    component.entityFormControl.setValue('New Candidate');
+    component.entryFormControl.setValue('New Candidate');
     fixture.detectChanges(); // Update the view to show the button
 
     const button = fixture.nativeElement.querySelector(
@@ -77,8 +77,8 @@ describe('NewEntityComponent', () => {
   });
 
   it('should display minlength error when value is too short', () => {
-    component.entityFormControl.setValue('A');
-    component.entityFormControl.markAsTouched();
+    component.entryFormControl.setValue('A');
+    component.entryFormControl.markAsTouched();
     fixture.detectChanges();
 
     const errorElement = fixture.nativeElement.querySelector(

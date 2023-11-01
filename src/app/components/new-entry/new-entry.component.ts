@@ -5,13 +5,13 @@ import { FormService } from 'src/app/services/form.service';
 import { CandidatesService } from 'src/app/services/candidates.service';
 
 @Component({
-  selector: 'app-new-entity',
-  templateUrl: './new-entity.component.html',
-  styleUrls: ['./new-entity.component.scss'],
+  selector: 'app-new-entry',
+  templateUrl: './new-entry.component.html',
+  styleUrls: ['./new-entry.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewEntityComponent {
-  @Input({ required: true }) entityFormControl!: FormControl;
+export class NewEntryComponent {
+  @Input({ required: true }) entryFormControl!: FormControl;
   @Output() addNewCandidate: EventEmitter<void> = new EventEmitter<void>();
   @Output() toggleAddMode: EventEmitter<void> = new EventEmitter<void>();
 

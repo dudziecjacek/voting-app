@@ -14,9 +14,9 @@ export abstract class CustomValidators {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return entities.pipe(
         first(),
-        map((entityArray) => {
-          const isNameExisting = entityArray.some(
-            (entity) => entity.name === control.value
+        map((entryArray) => {
+          const isNameExisting = entryArray.some(
+            (entry) => entry.name === control.value
           );
           return isNameExisting
             ? { existingName: { value: control.value } }
@@ -36,9 +36,9 @@ export abstract class CustomValidators {
       let isExisting: boolean = false;
       entities()
         .pipe(first())
-        .subscribe((entity) => {
-          isExisting = entity.some(
-            (entity: Entity) => entity.name === control.value
+        .subscribe((entry) => {
+          isExisting = entry.some(
+            (entry: Entity) => entry.name === control.value
           );
         });
       return isExisting ? { existingName: { value: control.value } } : null;
