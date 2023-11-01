@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VotersListComponent } from './components/voters-list/voters-list.component';
+import { CandidatesListComponent } from './components/candidates-list/candidates-list.component';
+import { MakeVoteComponent } from './components/make-vote/make-vote.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatSelectModule } from '@angular/material/select';
@@ -20,6 +22,8 @@ import { NewEntityComponent } from './components/new-entity/new-entity.component
   declarations: [
     AppComponent,
     VotersListComponent,
+    CandidatesListComponent,
+    MakeVoteComponent,
     NewEntityComponent,
     TrimDirective,
   ],
