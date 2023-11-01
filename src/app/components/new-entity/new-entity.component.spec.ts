@@ -6,18 +6,22 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NewEntityComponent } from './new-entity.component';
-import { VotingStateService } from 'src/app/services/voting-state.service';
+import { CandidatesService } from 'src/app/services/candidates.service';
 import { TrimDirective } from 'src/app/directives/trim.directive';
+import { FormService } from 'src/app/services/form.service';
 
 describe('NewEntityComponent', () => {
   let component: NewEntityComponent;
   let fixture: ComponentFixture<NewEntityComponent>;
 
-  const mockVotingStateService: jasmine.SpyObj<VotingStateService> =
-    jasmine.createSpyObj('VotingStateService', ['buildForm'], {
+  const mockFormService: jasmine.SpyObj<FormService> = jasmine.createSpyObj(
+    'FormService',
+    ['buildForm'],
+    {
       NEW_VOTER_MIN_LENGTH: 2,
       NEW_VOTER_MAX_LENGTH: 20,
-    });
+    }
+  );
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,9 +33,7 @@ describe('NewEntityComponent', () => {
         BrowserAnimationsModule,
       ],
       declarations: [NewEntityComponent, TrimDirective],
-      providers: [
-        { provide: VotingStateService, useValue: mockVotingStateService },
-      ],
+      providers: [{ provide: CandidatesService, useValue: mockFormService }],
     }).compileComponents();
   });
 

@@ -1,8 +1,4 @@
-<table
-  mat-table
-  [dataSource]="votingStateService.candidates"
-  class="mat-elevation-z8"
->
+<table mat-table [dataSource]="candidates" class="mat-elevation-z8">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">{{ element.name }}</td>
@@ -46,7 +42,7 @@
   *ngIf="addCandidateMode"
   [entityFormControl]="newCandidateFormControl"
   (addNewCandidate)="addNewCandidate()"
-  (toggleAddMode)="addCandidateMode = false"
+  (toggleAddMode)="clearFormState()"
 >
   Add new candidate
 </app-new-entity>

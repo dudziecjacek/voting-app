@@ -4,32 +4,43 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormControl } from '@angular/forms';
 
-import { VotingStateService } from 'src/app/services/voting-state.service';
+import { CandidatesService } from 'src/app/services/candidates.service';
 import { Voter } from 'src/app/interfaces';
 import { VotersListComponent } from './voters-list.component';
+import { FormService } from 'src/app/services/form.service';
+import { VotersService } from 'src/app/services/voters.service';
+import { of } from 'rxjs';
 
 describe('VotersListComponent', () => {
   let component: VotersListComponent;
   let fixture: ComponentFixture<VotersListComponent>;
 
-  const mockVotingStateService: jasmine.SpyObj<VotingStateService> =
-    jasmine.createSpyObj('VotingStateService', ['buildForm'], {
-      voters: prepareVoters(),
-    });
+  const mockVotersService: jasmine.SpyObj<VotersService> = jasmine.createSpyObj(
+    'VotersService',
+    ['setVoters'],
+    {
+      voters$: of(prepareVoters()),
+    }
+  );
+  const mockFormService: jasmine.SpyObj<FormService> = jasmine.createSpyObj(
+    'FormService',
+    ['buildForm']
+  );
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [VotersListComponent],
       imports: [MatTableModule, MatInputModule, MatIconModule],
       providers: [
-        { provide: VotingStateService, useValue: mockVotingStateService },
+        { provide: VotersService, useValue: mockVotersService },
+        { provide: FormService, useValue: mockFormService },
         FormBuilder,
       ],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    mockVotingStateService.buildForm.and.returnValue(new FormControl(''));
+    mockFormService.buildForm.and.returnValue(new FormControl(''));
 
     fixture = TestBed.createComponent(VotersListComponent);
     component = fixture.componentInstance;
@@ -54,9 +65,6 @@ describe('VotersListComponent', () => {
   });
 
   it('should not display empty message when there are voters', () => {
-    component['votingStateService'].voters = [];
-    fixture.detectChanges();
-
     const noDataRow = fixture.nativeElement.querySelector(
       '[testId="empty-cell-message"]'
     );

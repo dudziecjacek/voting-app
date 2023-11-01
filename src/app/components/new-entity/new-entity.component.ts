@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { VotingStateService } from 'src/app/services/voting-state.service';
+import { FormService } from 'src/app/services/form.service';
+import { CandidatesService } from 'src/app/services/candidates.service';
 
 @Component({
   selector: 'app-new-entity',
@@ -14,5 +15,5 @@ export class NewEntityComponent {
   @Output() addNewCandidate: EventEmitter<void> = new EventEmitter<void>();
   @Output() toggleAddMode: EventEmitter<void> = new EventEmitter<void>();
 
-  protected votingStateService: VotingStateService = inject(VotingStateService);
+  protected formService: FormService = inject(FormService);
 }

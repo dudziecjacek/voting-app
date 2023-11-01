@@ -13,7 +13,6 @@ import { MakeVoteComponent } from './components/make-vote/make-vote.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatSelectModule } from '@angular/material/select';
-import { VotingStateService } from './services/voting-state.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TrimDirective } from './directives/trim.directive';
 import { NewEntityComponent } from './components/new-entity/new-entity.component';
@@ -39,7 +38,6 @@ import { NewEntityComponent } from './components/new-entity/new-entity.component
     MatSelectModule,
     MatSnackBarModule,
   ],
-  providers: [VotingStateService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

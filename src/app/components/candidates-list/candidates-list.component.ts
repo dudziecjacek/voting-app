@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, inject } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { Observable, first } from 'rxjs';
 
 import { CandidatesListColumns } from 'src/app/enums';
 import { Candidate } from 'src/app/interfaces';
-import { VotingStateService } from 'src/app/services/voting-state.service';
+import { FormService } from 'src/app/services/form.service';
+import { CandidatesService } from 'src/app/services/candidates.service';
 
 @Component({
   selector: 'app-candidates-list',
@@ -20,13 +22,15 @@ export class CandidatesListComponent {
     CandidatesListColumns.VOTE_COUNT,
   ];
 
-  protected votingStateService: VotingStateService = inject(VotingStateService);
-  protected fb: FormBuilder = inject(FormBuilder);
+  private votingStateService: CandidatesService = inject(CandidatesService);
+  private formService: FormService = inject(FormService);
 
   public ngOnInit(): void {
-    this.newCandidateFormControl = this.votingStateService.buildForm(
-      () => this.votingStateService.candidates
-    );
+    this.candidates.pipe(first()).subscribe((candidates) => {
+      this.newCandidateFormControl = this.formService.buildForm(
+        () => candidates
+      );
+    });
   }
 
   protected enableAddCandidateMode(): void {
@@ -38,17 +42,17 @@ export class CandidatesListComponent {
       return;
     }
 
-    const newCandidatesArray: Candidate[] = [
-      ...this.votingStateService.candidates,
-    ];
-    newCandidatesArray.push({
-      id: crypto.randomUUID(),
-      name: this.newCandidateFormControl.value,
-      voteCount: 0,
-    });
-    this.votingStateService.candidates = newCandidatesArray;
+    this.votingStateService.setCandidates(this.newCandidateFormControl.value);
 
-    this.addCandidateMode = false;
+    this.clearFormState();
+  }
+
+  protected clearFormState(): void {
     this.newCandidateFormControl.reset();
+    this.addCandidateMode = false;
+  }
+
+  protected get candidates(): Observable<Candidate[]> {
+    return this.votingStateService.candidates$;
   }
 }

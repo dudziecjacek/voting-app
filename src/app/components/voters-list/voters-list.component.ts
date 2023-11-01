@@ -1,3 +1,4 @@
+import { VotersService } from './../../services/voters.service';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,9 +6,11 @@ import {
   inject,
 } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { Observable, first } from 'rxjs';
 import { VotersListColumns } from 'src/app/enums';
 import { Voter } from 'src/app/interfaces';
-import { VotingStateService } from 'src/app/services/voting-state.service';
+import { FormService } from 'src/app/services/form.service';
+import { CandidatesService } from 'src/app/services/candidates.service';
 
 @Component({
   selector: 'app-voters-list',
@@ -23,13 +26,13 @@ export class VotersListComponent implements OnInit {
     VotersListColumns.HAS_VOTED,
   ];
 
-  protected votingStateService: VotingStateService = inject(VotingStateService);
-  protected fb: FormBuilder = inject(FormBuilder);
+  protected votersService: VotersService = inject(VotersService);
+  private formService: FormService = inject(FormService);
 
   public ngOnInit(): void {
-    this.newVoterFormControl = this.votingStateService.buildForm(
-      () => this.votingStateService.voters
-    );
+    this.voters.pipe(first()).subscribe((voters) => {
+      this.newVoterFormControl = this.formService.buildForm(() => voters);
+    });
   }
 
   protected enableAddVoterMode(): void {
@@ -41,15 +44,17 @@ export class VotersListComponent implements OnInit {
       return;
     }
 
-    const newVotersArray: Voter[] = [...this.votingStateService.voters];
-    newVotersArray.push({
-      id: crypto.randomUUID(),
-      name: this.newVoterFormControl.value,
-      hasVoted: false,
-    });
-    this.votingStateService.voters = newVotersArray;
+    this.votersService.setVoters(this.newVoterFormControl.value);
 
+    this.clearFormState();
+  }
+
+  protected clearFormState(): void {
     this.addVoterMode = false;
     this.newVoterFormControl.reset();
+  }
+
+  protected get voters(): Observable<Voter[]> {
+    return this.votersService.voters$;
   }
 }

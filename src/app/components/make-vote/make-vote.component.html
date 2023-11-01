@@ -1,0 +1,35 @@
+<div class="container">
+  <mat-form-field *ngIf="voters$ | async as voters">
+    <mat-label>Choose voter</mat-label>
+    <mat-select [(value)]="selectedVoter" [disabled]="voters.length === 0">
+      <mat-option *ngFor="let voter of voters" [value]="voter">
+        {{ voter.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field
+    [ariaDisabled]="true"
+    *ngIf="candidates$ | async as candidates"
+  >
+    <mat-label>Choose candidate</mat-label>
+    <mat-select
+      [(value)]="selectedCandidate"
+      [disabled]="candidates.length === 0"
+    >
+      <mat-option *ngFor="let candidate of candidates" [value]="candidate">
+        {{ candidate.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button
+    matSuffix
+    mat-icon-button
+    aria-label="Check"
+    testId="send-vote"
+    [disabled]="!selectedVoter || !selectedCandidate"
+    (click)="sendVote()"
+  >
+    <mat-icon>check</mat-icon>
+  </button>
+</div>
