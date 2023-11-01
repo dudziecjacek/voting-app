@@ -9,7 +9,7 @@ export class FormService {
   public NEW_VOTER_MIN_LENGTH: number = 2;
   public NEW_VOTER_MAX_LENGTH: number = 20;
 
-  protected fb: FormBuilder = inject(FormBuilder);
+  private fb: FormBuilder = inject(FormBuilder);
 
   public buildForm(entities: any): FormControl {
     return this.fb.control('', {

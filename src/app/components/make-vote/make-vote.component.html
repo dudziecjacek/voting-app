@@ -1,6 +1,6 @@
 <div class="container">
   <mat-form-field *ngIf="voters$ | async as voters">
-    <mat-label>Choose voter</mat-label>
+    <mat-label>I am</mat-label>
     <mat-select [(value)]="selectedVoter" [disabled]="voters.length === 0">
       <mat-option *ngFor="let voter of voters" [value]="voter">
         {{ voter.name }}
@@ -11,7 +11,7 @@
     [ariaDisabled]="true"
     *ngIf="candidates$ | async as candidates"
   >
-    <mat-label>Choose candidate</mat-label>
+    <mat-label>I vote for</mat-label>
     <mat-select
       [(value)]="selectedCandidate"
       [disabled]="candidates.length === 0"

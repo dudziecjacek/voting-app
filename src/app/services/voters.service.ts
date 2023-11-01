@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
 import { Voter } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VotersService {
-  private votersSubject: BehaviorSubject<Voter[]> = new BehaviorSubject<
-    Voter[]
-  >([]);
+  private votersSubject: BehaviorSubject<Voter[]> = new BehaviorSubject<Voter[]>([]);
   public voters$ = this.votersSubject.asObservable();
 
   public setVoters(newVoterName: string): void {
@@ -26,10 +25,12 @@ export class VotersService {
   public updateHasVoted(voterId: string): void {
     const newVotersArray: Voter[] = this.votersSubject
       .getValue()
-      .map((voter) => ({
-        ...voter,
-        hasVoted: !!(voter.id === voterId),
-      }));
+      .map((voter) => {
+        if (voter.id === voterId) {
+          return { ...voter, hasVoted: !voter.hasVoted };
+        }
+        return voter;
+      });
 
     this.votersSubject.next(newVotersArray);
   }

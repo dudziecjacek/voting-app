@@ -22,14 +22,22 @@ export class MakeVoteComponent {
 
   protected sendVote(): void {
     if (this.selectedVoter?.hasVoted) {
-      this.snackBar.open('This Voter has already casted their vote');
+      this.snackBar.open(
+        'This Voter has already casted their vote',
+        undefined,
+        {
+          duration: 2000,
+        }
+      );
       return;
     }
 
     this.updateCandidateVoteCount();
     this.updateHasVotedValue();
 
-    this.snackBar.open('Vote has been casted successfully!');
+    this.snackBar.open('Vote has been casted successfully!', undefined, {
+      duration: 2000,
+    });
 
     this.selectedVoter = undefined;
     this.selectedCandidate = undefined;

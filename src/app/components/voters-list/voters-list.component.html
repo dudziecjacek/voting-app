@@ -13,16 +13,18 @@
 
   <ng-container matColumnDef="header-row-first-group">
     <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
-      <span>Voters</span>
-      <button
-        matSuffix
-        mat-icon-button
-        aria-label="Add"
-        class="action"
-        (click)="enableAddVoterMode()"
-      >
-        <mat-icon>add</mat-icon>
-      </button>
+      <div class="header-content">
+        <span>Voters</span>
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="Add"
+          class="action"
+          (click)="enableAddVoterMode()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
     </th>
   </ng-container>
 
