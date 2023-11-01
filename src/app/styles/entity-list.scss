@@ -4,9 +4,13 @@
   background-color: beige;
 }
 
-table {
+.table {
   max-width: 50%;
   border: 1px solid black;
+
+  .mat-mdc-header-cell {
+    width: 50%;
+  }
 }
 
 .action {

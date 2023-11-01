@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TrimDirective } from './trim.directive';
 import { Component, DebugElement, ElementRef, Renderer2 } from '@angular/core';
 import { NgControl, FormControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+
+import { TrimDirective } from './trim.directive';
 
 @Component({
   template: `<input type="text" testId="input" trimFormControl />`,

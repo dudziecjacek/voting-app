@@ -16,7 +16,7 @@ export class MakeVoteComponent {
   protected selectedVoter?: Voter;
   protected selectedCandidate?: Candidate;
 
-  protected votingStateService: CandidatesService = inject(CandidatesService);
+  protected candidatesService: CandidatesService = inject(CandidatesService);
   protected votersService: VotersService = inject(VotersService);
   protected snackBar: MatSnackBar = inject(MatSnackBar);
 
@@ -36,25 +36,15 @@ export class MakeVoteComponent {
   }
 
   private updateCandidateVoteCount(): void {
-    // this.findEntityById(
-    //   this.candidates,
-    //   this.selectedCandidate!
-    // )!.voteCount += 1;
+    this.candidatesService.updateCandidateVotes(this.selectedCandidate!.id);
   }
 
   private updateHasVotedValue(): void {
-    // this.findEntityById(this.voters, this.selectedVoter!)!.hasVoted = true;
-  }
-
-  private findEntityById<T extends { id: string }>(
-    entityArray: T[],
-    selectedEntity: T
-  ): T | undefined {
-    return entityArray.find((voter: T) => voter.id === selectedEntity?.id);
+    this.votersService.updateHasVoted(this.selectedVoter!.id);
   }
 
   protected get candidates$(): Observable<Candidate[]> {
-    return this.votingStateService.candidates$;
+    return this.candidatesService.candidates$;
   }
 
   protected get voters$(): Observable<Voter[]> {

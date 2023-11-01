@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, first } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { CandidatesListColumns } from 'src/app/enums';
 import { Candidate } from 'src/app/interfaces';
@@ -22,15 +22,11 @@ export class CandidatesListComponent {
     CandidatesListColumns.VOTE_COUNT,
   ];
 
-  private votingStateService: CandidatesService = inject(CandidatesService);
+  private candidatesService: CandidatesService = inject(CandidatesService);
   private formService: FormService = inject(FormService);
 
   public ngOnInit(): void {
-    this.candidates.pipe(first()).subscribe((candidates) => {
-      this.newCandidateFormControl = this.formService.buildForm(
-        () => candidates
-      );
-    });
+    this.newCandidateFormControl = this.formService.buildForm(this.candidates);
   }
 
   protected enableAddCandidateMode(): void {
@@ -42,7 +38,7 @@ export class CandidatesListComponent {
       return;
     }
 
-    this.votingStateService.setCandidates(this.newCandidateFormControl.value);
+    this.candidatesService.setCandidates(this.newCandidateFormControl.value);
 
     this.clearFormState();
   }
@@ -53,6 +49,6 @@ export class CandidatesListComponent {
   }
 
   protected get candidates(): Observable<Candidate[]> {
-    return this.votingStateService.candidates$;
+    return this.candidatesService.candidates$;
   }
 }

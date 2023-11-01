@@ -22,4 +22,15 @@ export class VotersService {
 
     this.votersSubject.next(newVotersArray);
   }
+
+  public updateHasVoted(voterId: string): void {
+    const newVotersArray: Voter[] = this.votersSubject
+      .getValue()
+      .map((voter) => ({
+        ...voter,
+        hasVoted: !!(voter.id === voterId),
+      }));
+
+    this.votersSubject.next(newVotersArray);
+  }
 }

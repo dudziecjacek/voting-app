@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { Candidate, Voter } from 'src/app/interfaces';
 import { CandidatesService } from '../../services/candidates.service';
 import { MakeVoteComponent } from './make-vote.component';
+import { of } from 'rxjs';
+import { VotersService } from 'src/app/services/voters.service';
 
 describe('MakeVoteComponent', () => {
   let component: MakeVoteComponent;
@@ -19,10 +21,17 @@ describe('MakeVoteComponent', () => {
   let snackBar: MatSnackBar;
 
   const mockCandidatesService: jasmine.SpyObj<CandidatesService> =
-    jasmine.createSpyObj('CandidatesService', [], {
-      voters: prepareVoters(),
-      candidates: prepareCandidates(),
+    jasmine.createSpyObj('CandidatesService', ['updateCandidateVotes'], {
+      candidates$: of(prepareCandidates()),
     });
+
+  const mockVotersService: jasmine.SpyObj<VotersService> = jasmine.createSpyObj(
+    'VotersService',
+    ['updateHasVoted'],
+    {
+      voters$: of(prepareCandidates()),
+    }
+  );
   const mockSnackBar = jasmine.createSpyObj('MatSnackBar', ['open']);
 
   beforeEach(() => {
@@ -38,6 +47,7 @@ describe('MakeVoteComponent', () => {
       declarations: [MakeVoteComponent],
       providers: [
         { provide: CandidatesService, useValue: mockCandidatesService },
+        { provide: VotersService, useValue: mockVotersService },
         { provide: MatSnackBar, useValue: mockSnackBar },
       ],
     }).compileComponents();

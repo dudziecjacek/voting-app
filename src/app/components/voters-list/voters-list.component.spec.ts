@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormControl } from '@angular/forms';
 
-import { CandidatesService } from 'src/app/services/candidates.service';
 import { Voter } from 'src/app/interfaces';
 import { VotersListComponent } from './voters-list.component';
 import { FormService } from 'src/app/services/form.service';

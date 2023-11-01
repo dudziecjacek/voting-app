@@ -26,4 +26,18 @@ export class CandidatesService {
 
     this.candidatesSubject.next(newCandidatesArray);
   }
+
+  public updateCandidateVotes(candidateId: string): void {
+    const newCandidatesArray: Candidate[] = this.candidatesSubject
+      .getValue()
+      .map((candidate) => ({
+        ...candidate,
+        voteCount:
+          candidate.id === candidateId
+            ? candidate.voteCount + 1
+            : candidate.voteCount,
+      }));
+
+    this.candidatesSubject.next(newCandidatesArray);
+  }
 }

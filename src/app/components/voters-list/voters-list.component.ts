@@ -10,7 +10,6 @@ import { Observable, first } from 'rxjs';
 import { VotersListColumns } from 'src/app/enums';
 import { Voter } from 'src/app/interfaces';
 import { FormService } from 'src/app/services/form.service';
-import { CandidatesService } from 'src/app/services/candidates.service';
 
 @Component({
   selector: 'app-voters-list',
@@ -30,9 +29,7 @@ export class VotersListComponent implements OnInit {
   private formService: FormService = inject(FormService);
 
   public ngOnInit(): void {
-    this.voters.pipe(first()).subscribe((voters) => {
-      this.newVoterFormControl = this.formService.buildForm(() => voters);
-    });
+    this.newVoterFormControl = this.formService.buildForm(this.voters);
   }
 
   protected enableAddVoterMode(): void {
