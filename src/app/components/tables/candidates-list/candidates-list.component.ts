@@ -17,7 +17,8 @@ import { CandidatesService } from 'src/app/services/candidates.service';
 export class CandidatesListComponent {
   protected addCandidateMode: boolean = false;
   protected newCandidateFormControl!: FormControl;
-  protected displayedColumns: string[] = [
+
+  protected readonly displayedColumns: string[] = [
     CandidatesListColumns.NAME,
     CandidatesListColumns.VOTE_COUNT,
   ];
@@ -39,7 +40,6 @@ export class CandidatesListComponent {
     }
 
     this.candidatesService.setCandidates(this.newCandidateFormControl.value);
-
     this.clearFormState();
   }
 

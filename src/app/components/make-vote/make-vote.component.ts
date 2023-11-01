@@ -20,35 +20,38 @@ export class MakeVoteComponent {
   protected votersService: VotersService = inject(VotersService);
   protected snackBar: MatSnackBar = inject(MatSnackBar);
 
+  private static readonly SNACK_BAR_DURATION_IN_MS: number = 2_000;
+
   protected sendVote(): void {
     if (this.selectedVoter?.hasVoted) {
-      this.snackBar.open(
-        'This Voter has already casted their vote',
-        undefined,
-        {
-          duration: 2000,
-        }
-      );
+      this.showSnackBar('❌', 'This Voter has already casted their vote');
       return;
     }
 
     this.updateCandidateVoteCount();
-    this.updateHasVotedValue();
+    this.updateWhoVoted();
+    this.resetSelection();
 
-    this.snackBar.open('Vote has been casted successfully!', undefined, {
-      duration: 2000,
-    });
-
-    this.selectedVoter = undefined;
-    this.selectedCandidate = undefined;
+    this.showSnackBar('✅', 'Vote has been casted successfully!');
   }
 
   private updateCandidateVoteCount(): void {
     this.candidatesService.updateCandidateVotes(this.selectedCandidate!.id);
   }
 
-  private updateHasVotedValue(): void {
+  private updateWhoVoted(): void {
     this.votersService.updateHasVoted(this.selectedVoter!.id);
+  }
+
+  private showSnackBar(action: string, message: string): void {
+    this.snackBar.open(message, action, {
+      duration: MakeVoteComponent.SNACK_BAR_DURATION_IN_MS,
+    });
+  }
+
+  private resetSelection(): void {
+    this.selectedVoter = undefined;
+    this.selectedCandidate = undefined;
   }
 
   protected get candidates$(): Observable<Candidate[]> {
